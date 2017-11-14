@@ -1,0 +1,7 @@
+build/*
+dist/*
+nbproject/private/*
+/AgendaSur-ejb/build/
+/AgendaSur-war/build/
+/AgendaSur-ejb/dist/
+/AgendaSur-war/dist/

@@ -69,10 +69,10 @@ public class Evento implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHAINICIO")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechainicio;
     @Column(name = "FECHAFIN")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechafin;
     @Basic(optional = false)
     @NotNull

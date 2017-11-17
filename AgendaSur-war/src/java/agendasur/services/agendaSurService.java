@@ -11,8 +11,8 @@ import agendasur.ejb.TagFacade;
 import agendasur.ejb.UsuarioFacade;
 import agendasur.entity.Comentario;
 import agendasur.entity.Evento;
-import agendasur.entity.Tag;
 import agendasur.entity.Usuario;
+import agendasur.entity.Tag;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.Oneway;
@@ -27,7 +27,7 @@ import javax.jws.WebService;
 @WebService(serviceName = "agendaSurService")
 public class agendaSurService {
 
-    @EJB
+   @EJB
     private EventoFacade ejbEvento;// Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Web Service Operation")
     @EJB
@@ -199,5 +199,4 @@ public class agendaSurService {
     public int countTag() {
         return ejbTag.count();
     }
-    
 }

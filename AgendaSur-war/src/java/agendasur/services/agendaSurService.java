@@ -13,6 +13,7 @@ import agendasur.entity.Comentario;
 import agendasur.entity.Evento;
 import agendasur.entity.Usuario;
 import agendasur.entity.Tag;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.Oneway;
@@ -59,6 +60,11 @@ public class agendaSurService {
     @WebMethod(operationName = "findEvento")
     public Evento findEvento(@WebParam(name = "id") Object id) {
         return ejbEvento.find(id);
+    }
+    
+    @WebMethod (operationName = "findTagsEvento")
+    public List<Evento> findTagsEvento(Tag tag){
+        return tag.getEventoList();
     }
 
     @WebMethod(operationName = "findAllEvento")

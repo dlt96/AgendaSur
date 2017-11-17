@@ -6,7 +6,6 @@
 package agendasur.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -23,8 +22,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author dlope
+ * @author Adrian
  */
 @Entity
 @Table(name = "EVENTO")
@@ -68,12 +65,12 @@ public class Evento implements Serializable {
     private String descripcion;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 80)
     @Column(name = "FECHAINICIO")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechainicio;
+    private String fechainicio;
+    @Size(max = 80)
     @Column(name = "FECHAFIN")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechafin;
+    private String fechafin;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 200)
@@ -91,7 +88,7 @@ public class Evento implements Serializable {
     @NotNull
     @Column(name = "LONGITUD")
     private float longitud;
-    @JoinTable(name = "Like", joinColumns = {
+    @JoinTable(name = "MEGUSTA", joinColumns = {
         @JoinColumn(name = "EVENTO_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
         @JoinColumn(name = "USUARIO_EMAIL", referencedColumnName = "EMAIL")})
     @ManyToMany
@@ -114,7 +111,7 @@ public class Evento implements Serializable {
         this.id = id;
     }
 
-    public Evento(Integer id, String nombre, String descripcion, Date fechainicio, String direccion, Boolean validado, float latitud, float longitud) {
+    public Evento(Integer id, String nombre, String descripcion, String fechainicio, String direccion, Boolean validado, float latitud, float longitud) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -149,19 +146,19 @@ public class Evento implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Date getFechainicio() {
+    public String getFechainicio() {
         return fechainicio;
     }
 
-    public void setFechainicio(Date fechainicio) {
+    public void setFechainicio(String fechainicio) {
         this.fechainicio = fechainicio;
     }
 
-    public Date getFechafin() {
+    public String getFechafin() {
         return fechafin;
     }
 
-    public void setFechafin(Date fechafin) {
+    public void setFechafin(String fechafin) {
         this.fechafin = fechafin;
     }
 

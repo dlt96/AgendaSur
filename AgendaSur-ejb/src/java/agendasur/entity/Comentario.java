@@ -6,7 +6,6 @@
 package agendasur.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -16,15 +15,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author dlope
+ * @author Adrian
  */
 @Entity
 @Table(name = "COMENTARIO")
@@ -47,9 +44,9 @@ public class Comentario implements Serializable {
     private String comentario;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 80)
     @Column(name = "FECHA")
-    @Temporal(TemporalType.DATE)
-    private Date fecha;
+    private String fecha;
     @JoinColumn(name = "EVENTO_ID", referencedColumnName = "ID", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Evento evento;
@@ -64,7 +61,7 @@ public class Comentario implements Serializable {
         this.comentarioPK = comentarioPK;
     }
 
-    public Comentario(ComentarioPK comentarioPK, String comentario, Date fecha) {
+    public Comentario(ComentarioPK comentarioPK, String comentario, String fecha) {
         this.comentarioPK = comentarioPK;
         this.comentario = comentario;
         this.fecha = fecha;
@@ -90,11 +87,11 @@ public class Comentario implements Serializable {
         this.comentario = comentario;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

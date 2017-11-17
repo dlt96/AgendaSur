@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author dlope
+ * @author Adrian
  */
 @Stateless
 public class TagFacade extends AbstractFacade<Tag> {

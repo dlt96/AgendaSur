@@ -66,6 +66,11 @@ public class agendaSurService {
     public List<Evento> findTagsEvento(Tag tag){
         return tag.getEventoList();
     }
+    
+    @WebMethod (operationName = "findCometariosEvento")
+    public List<Comentario> findComentariosEvento(Evento evento){
+        return evento.getComentarioList();
+    }
 
     @WebMethod(operationName = "findAllEvento")
     public List<Evento> findAllEvento() {

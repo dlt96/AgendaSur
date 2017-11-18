@@ -65,7 +65,7 @@ public class agendaSurService {
     
     @WebMethod (operationName = "findEventosByTag")
     public List<Evento> findEventosByTag(Tag tag){
-        return ejbTag.getEventos(tag.getNombre());
+        return ejbEvento.findEventosByTag(tag);
     }
     
     @WebMethod (operationName = "findComentariosEvento")

@@ -6,9 +6,12 @@
 package agendasur.ejb;
 
 import agendasur.entity.Evento;
+import agendasur.entity.Tag;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +30,13 @@ public class EventoFacade extends AbstractFacade<Evento> {
 
     public EventoFacade() {
         super(Evento.class);
+    }
+    
+    public List<Evento> findEventosByTag(Tag tag){
+        Query q;
+        q = this.em.createQuery("select e from Evento e where :tag MEMBER OF e.tagList ");
+        q.setParameter("tag", tag);
+        return q.getResultList();
     }
     
 }

@@ -31,7 +31,8 @@ public class TagFacade extends AbstractFacade<Tag> {
     public TagFacade() {
         super(Tag.class);
     }
-
+    
+    //Esta consulta puede que sea erronea
     public List<Evento> getEventos(String nombre) {
         Query q;
         q = this.em.createQuery("select t from Tag t where t.nombre = :tag ");

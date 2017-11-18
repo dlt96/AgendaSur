@@ -14,6 +14,7 @@ import agendasur.entity.Evento;
 import agendasur.entity.Usuario;
 import agendasur.entity.Tag;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.Oneway;
@@ -87,10 +88,19 @@ public class agendaSurService {
         return ejbEvento.count();
     }
     
+    @WebMethod(operationName = "asignarTagsAEvento")
+    public void asignarTagsAEvento(Evento evento, List<Tag> listTags){
+        evento.setTagList(listTags);
+        for (Tag tag : listTags){
+            if (tag.getEventoList() == null) tag.setEventoList(new LinkedList<>());
+            tag.getEventoList().add(evento);
+            ejbTag.edit(tag);
+        }
+        ejbEvento.edit(evento);
+    }
     
     //COMENTARIO
     
-
     @WebMethod(operationName = "createComentario")
     @Oneway
     public void createComentario(@WebParam(name = "entity") Comentario entity) {

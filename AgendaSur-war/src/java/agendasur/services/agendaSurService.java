@@ -62,14 +62,14 @@ public class agendaSurService {
         return ejbEvento.find(id);
     }
     
-    @WebMethod (operationName = "findTagsEvento")
-    public List<Evento> findTagsEvento(Tag tag){
-        return tag.getEventoList();
+    @WebMethod (operationName = "findEventosByTag")
+    public List<Evento> findEventosByTag(Tag tag){
+        return ejbTag.getEventos(tag.getNombre());
     }
     
-    @WebMethod (operationName = "findCometariosEvento")
-    public List<Comentario> findComentariosEvento(Evento evento){
-        return evento.getComentarioList();
+    @WebMethod (operationName = "findComentariosEvento")
+    public List<Comentario> findComentariosEvento(int id){
+        return ejbComentario.getComentarios(id);
     }
 
     @WebMethod(operationName = "findAllEvento")

@@ -99,6 +99,25 @@ public class agendaSurService {
         ejbEvento.edit(evento);
     }
     
+    @WebMethod(operationName = "darMeGusta")
+    public void darMeGusta(Evento evento, Usuario usuario){
+        List<Usuario> meGustasEvento = evento.getUsuarioList();
+        meGustasEvento.add(usuario);
+        evento.setUsuarioList(meGustasEvento);
+        
+        List<Evento> meGustasUsuario = usuario.getEventoList();
+        meGustasUsuario.add(evento);
+        usuario.setEventoList(meGustasUsuario);
+        
+        ejbEvento.edit(evento);
+        ejbUsuario.edit(usuario);
+    } 
+    
+    @WebMethod(operationName = "findEventosNoCaducadosYValidados")
+    public List<Evento> findEventosNoCaducadosYValidados(){
+        return ejbEvento.findEventosNoCaducadosYValidados();
+    }
+    
     //COMENTARIO
     
     @WebMethod(operationName = "createComentario")
@@ -180,7 +199,7 @@ public class agendaSurService {
     public int countUsuario() {
         return ejbUsuario.count();
     }
-
+    
 //TAG
 
     @WebMethod(operationName = "createTag")

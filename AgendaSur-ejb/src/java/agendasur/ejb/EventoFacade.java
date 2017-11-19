@@ -32,6 +32,12 @@ public class EventoFacade extends AbstractFacade<Evento> {
         super(Evento.class);
     }
     
+    public List<Evento> findEventosNoValidados(){
+        Query q;
+        q = this.em.createQuery("select e from Evento e where e.validado = false");
+        return q.getResultList();
+    }
+    
     public List<Evento> findEventosByTag(Tag tag){
         Query q;
         q = this.em.createQuery("select e from Evento e where :tag MEMBER OF e.tagList ");

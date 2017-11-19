@@ -6,6 +6,7 @@
 package agendasur.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -196,6 +197,9 @@ public class Evento implements Serializable {
 
     @XmlTransient
     public List<Usuario> getUsuarioList() {
+        if(this.usuarioList == null){
+            this.usuarioList = new ArrayList<>();
+        }
         return usuarioList;
     }
 

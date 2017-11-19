@@ -13,6 +13,7 @@ import agendasur.entity.Comentario;
 import agendasur.entity.Evento;
 import agendasur.entity.Usuario;
 import agendasur.entity.Tag;
+import agendasur.mail.Mail;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,6 +22,7 @@ import javax.jws.Oneway;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+
 
 /**
  *
@@ -246,5 +248,10 @@ public class agendaSurService {
     @WebMethod(operationName = "countTag")
     public int countTag() {
         return ejbTag.count();
+    }
+    
+    @WebMethod(operationName = "sendMail")
+    public void sendMail(String msj, String email) {
+        Mail.sendMail(msj, email);        
     }
 }

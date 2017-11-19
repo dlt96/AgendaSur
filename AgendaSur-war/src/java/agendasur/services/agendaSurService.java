@@ -29,12 +29,12 @@ import javax.jws.WebService;
 @WebService(serviceName = "agendaSurService")
 public class agendaSurService {
 
-   @EJB
+    @EJB
     private EventoFacade ejbEvento;// Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Web Service Operation")
     @EJB
     private ComentarioFacade ejbComentario;
-    
+
     @EJB
     private TagFacade ejbTag;
     @EJB
@@ -62,14 +62,14 @@ public class agendaSurService {
     public Evento findEvento(@WebParam(name = "id") Object id) {
         return ejbEvento.find(id);
     }
-    
-    @WebMethod (operationName = "findEventosByTag")
-    public List<Evento> findEventosByTag(Tag tag){
+
+    @WebMethod(operationName = "findEventosByTag")
+    public List<Evento> findEventosByTag(Tag tag) {
         return ejbEvento.findEventosByTag(tag);
     }
-    
-    @WebMethod (operationName = "findComentariosEvento")
-    public List<Comentario> findComentariosEvento(int id){
+
+    @WebMethod(operationName = "findComentariosEvento")
+    public List<Comentario> findComentariosEvento(int id) {
         return ejbComentario.getComentarios(id);
     }
 
@@ -87,39 +87,51 @@ public class agendaSurService {
     public int countEvento() {
         return ejbEvento.count();
     }
-    
+
     @WebMethod(operationName = "asignarTagsAEvento")
-    public void asignarTagsAEvento(Evento evento, List<Tag> listTags){
+    public void asignarTagsAEvento(Evento evento, List<Tag> listTags) {
         evento.setTagList(listTags);
-        for (Tag tag : listTags){
-            if (tag.getEventoList() == null) tag.setEventoList(new LinkedList<>());
+        for (Tag tag : listTags) {
+            if (tag.getEventoList() == null) {
+                tag.setEventoList(new LinkedList<>());
+            }
             tag.getEventoList().add(evento);
             ejbTag.edit(tag);
         }
         ejbEvento.edit(evento);
     }
-    
+
     @WebMethod(operationName = "findEventosNoCaducadosYValidados")
-    public List<Evento> findEventosNoCaducadosYValidados(){
+    public List<Evento> findEventosNoCaducadosYValidados() {
         return ejbEvento.findEventosNoCaducadosYValidados();
+    }
+    
+    @WebMethod(operationName = "findEventosNoValidados")
+    public List<Evento> findEventosNoValidados(){
+        return ejbEvento.findEventosNoValidados();
     }
 
     @WebMethod(operationName = "darMeGusta")
-    public void darMeGusta(Evento evento, Usuario usuario){
+    public void darMeGusta(Evento evento, Usuario usuario) {
         List<Usuario> meGustasEvento = evento.getUsuarioList();
         meGustasEvento.add(usuario);
         evento.setUsuarioList(meGustasEvento);
-        
+
         List<Evento> meGustasUsuario = usuario.getEventoList();
         meGustasUsuario.add(evento);
         usuario.setEventoList(meGustasUsuario);
-        
+
         ejbEvento.edit(evento);
         ejbUsuario.edit(usuario);
     }
-    
+
+    @WebMethod(operationName = "existeMeGusta")
+    public boolean existeMeGusta(Evento evento, Usuario usuario) {
+        return ejbEvento.existeMegusta(evento, usuario);
+        //return evento.getUsuarioList().contains(usuario) && usuario.getEventoList().contains(evento);
+    }
+
     //COMENTARIO
-    
     @WebMethod(operationName = "createComentario")
     @Oneway
     public void createComentario(@WebParam(name = "entity") Comentario entity) {
@@ -157,11 +169,8 @@ public class agendaSurService {
     public int countComentario() {
         return ejbComentario.count();
     }
-    
-    
+
     //USUARIO
-    
-  
     @WebMethod(operationName = "createUsuario")
     @Oneway
     public void createUsuario(@WebParam(name = "entity") Usuario entity) {
@@ -201,7 +210,6 @@ public class agendaSurService {
     }
 
 //TAG
-
     @WebMethod(operationName = "createTag")
     @Oneway
     public void createTag(@WebParam(name = "entity") Tag entity) {

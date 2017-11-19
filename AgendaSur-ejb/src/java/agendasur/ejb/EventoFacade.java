@@ -7,6 +7,7 @@ package agendasur.ejb;
 
 import agendasur.entity.Evento;
 import agendasur.entity.Tag;
+import agendasur.entity.Usuario;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -33,8 +34,8 @@ public class EventoFacade extends AbstractFacade<Evento> {
     public EventoFacade() {
         super(Evento.class);
     }
-    
-    public List<Evento> findEventosNoValidados(){
+
+    public List<Evento> findEventosNoValidados() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date currentDate = new Date();
         Query q;
@@ -42,8 +43,8 @@ public class EventoFacade extends AbstractFacade<Evento> {
         q.setParameter("currentDate", formatter.format(currentDate));
         return q.getResultList();
     }
-    
-    public List<Evento> findEventosByTag(Tag tag){
+
+    public List<Evento> findEventosByTag(Tag tag) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date currentDate = new Date();
         Query q;
@@ -52,8 +53,8 @@ public class EventoFacade extends AbstractFacade<Evento> {
         q.setParameter("currentDate", formatter.format(currentDate));
         return q.getResultList();
     }
-    
-    public List<Evento> findEventosNoCaducadosYValidados(){
+
+    public List<Evento> findEventosNoCaducadosYValidados() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date currentDate = new Date();
         Query q;
@@ -61,5 +62,13 @@ public class EventoFacade extends AbstractFacade<Evento> {
         q.setParameter("currentDate", formatter.format(currentDate));
         return q.getResultList();
     }
-    
+
+    public boolean existeMegusta(Evento evento, Usuario usuario) {
+        Query q;
+        q = this.em.createQuery("select e from Evento e where e.id = :evento and :usuario MEMBER OF e.usuarioList");
+        q.setParameter("usuario", usuario);
+        q.setParameter("evento", evento.getId());
+        return q.getResultList().size()>0;
+    }
+
 }

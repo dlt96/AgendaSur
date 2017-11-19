@@ -104,6 +104,19 @@ public class agendaSurService {
         return ejbEvento.findEventosNoCaducadosYValidados();
     }
 
+    @WebMethod(operationName = "darMeGusta")
+    public void darMeGusta(Evento evento, Usuario usuario){
+        List<Usuario> meGustasEvento = evento.getUsuarioList();
+        meGustasEvento.add(usuario);
+        evento.setUsuarioList(meGustasEvento);
+        
+        List<Evento> meGustasUsuario = usuario.getEventoList();
+        meGustasUsuario.add(evento);
+        usuario.setEventoList(meGustasUsuario);
+        
+        ejbEvento.edit(evento);
+        ejbUsuario.edit(usuario);
+    }
     
     //COMENTARIO
     

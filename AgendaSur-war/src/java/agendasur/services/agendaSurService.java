@@ -99,6 +99,12 @@ public class agendaSurService {
         ejbEvento.edit(evento);
     }
     
+    @WebMethod(operationName = "findEventosNoCaducadosYValidados")
+    public List<Evento> findEventosNoCaducadosYValidados(){
+        return ejbEvento.findEventosNoCaducadosYValidados();
+    }
+
+    
     //COMENTARIO
     
     @WebMethod(operationName = "createComentario")

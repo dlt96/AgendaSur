@@ -53,6 +53,13 @@ public class EventoFacade extends AbstractFacade<Evento> {
         return q.getResultList();
     }
     
-    
+    public List<Evento> findEventosNoCaducadosYValidados(){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date currentDate = new Date();
+        Query q;
+        q = this.em.createQuery("select e from Evento e where e.validado = true and e.fechafin >= :currentDate");
+        q.setParameter("currentDate", formatter.format(currentDate));
+        return q.getResultList();
+    }
     
 }

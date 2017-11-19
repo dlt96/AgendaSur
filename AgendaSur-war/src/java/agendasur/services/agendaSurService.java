@@ -106,10 +106,12 @@ public class agendaSurService {
 
     @WebMethod(operationName = "darMeGusta")
     public void darMeGusta(Evento evento, Usuario usuario){
+        if(evento.getUsuarioList() == null) evento.setUsuarioList(new ArrayList<>());
         List<Usuario> meGustasEvento = evento.getUsuarioList();
         meGustasEvento.add(usuario);
         evento.setUsuarioList(meGustasEvento);
         
+        if(usuario.getEventoList()== null) evento.setUsuarioList(new ArrayList<>());
         List<Evento> meGustasUsuario = usuario.getEventoList();
         meGustasUsuario.add(evento);
         usuario.setEventoList(meGustasUsuario);

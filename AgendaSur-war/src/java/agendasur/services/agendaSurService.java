@@ -23,7 +23,6 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
-
 /**
  *
  * @author dlope
@@ -107,9 +106,9 @@ public class agendaSurService {
     public List<Evento> findEventosNoCaducadosYValidados() {
         return ejbEvento.findEventosNoCaducadosYValidados();
     }
-    
+
     @WebMethod(operationName = "findEventosNoValidados")
-    public List<Evento> findEventosNoValidados(){
+    public List<Evento> findEventosNoValidados() {
         return ejbEvento.findEventosNoValidados();
     }
 
@@ -125,6 +124,32 @@ public class agendaSurService {
 
         ejbEvento.edit(evento);
         ejbUsuario.edit(usuario);
+    }
+
+    @WebMethod(operationName = "findEventosOrdenadosPorDistancia")
+    public List<Evento> findEventosOrdenadosPorDistancia(double longitud, double latitud) {
+        List<Evento> listaEventos = this.findEventosNoCaducadosYValidados();
+        listaEventos.sort((evento1, evento2) -> 
+                Double.compare(getDistancia(evento2.getLatitud(), evento2.getLongitud(),latitud, longitud), 
+                            getDistancia(evento1.getLatitud(), evento1.getLongitud(),latitud, longitud)));
+        return listaEventos;
+    }
+
+    private double getDistancia(double latitudEvento, double longitudEvento,
+            double latitudUsuario, double longitudUsuario) {
+        final int R = 6371; // Radius of the earth
+
+        double latDistance = Math.toRadians(latitudEvento - latitudUsuario);
+        double lonDistance = Math.toRadians(longitudEvento - longitudUsuario);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(latitudUsuario)) * Math.cos(Math.toRadians(latitudEvento))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = R * c * 1000; // convert to meters
+
+        distance = Math.pow(distance, 2);
+
+        return Math.sqrt(distance);
     }
 
     @WebMethod(operationName = "existeMeGusta")
@@ -249,9 +274,9 @@ public class agendaSurService {
     public int countTag() {
         return ejbTag.count();
     }
-    
+
     @WebMethod(operationName = "sendMail")
     public void sendMail(String msj, String email) {
-        Mail.sendMail(msj, email);        
+        Mail.sendMail(msj, email);
     }
 }

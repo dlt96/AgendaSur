@@ -9,6 +9,8 @@ import agendasur.entity.Evento;
 import agendasur.entity.Tag;
 import agendasur.entity.Usuario;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.mail.Message;
@@ -62,6 +64,8 @@ public class Mail {
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
         
+        
+        
         Session session = Session.getInstance(properties, new javax.mail.Authenticator(){
             @Override
             protected PasswordAuthentication getPasswordAuthentication(){
@@ -70,6 +74,7 @@ public class Mail {
         });
         
         try{
+            Thread.sleep(1000);
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("ingenieriawebsoap@gmail.com"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
@@ -80,7 +85,9 @@ public class Mail {
             
     } catch (MessagingException ex){
         throw new RuntimeException (ex);
-    }
+    }   catch (InterruptedException ex) {
+            Logger.getLogger(Mail.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

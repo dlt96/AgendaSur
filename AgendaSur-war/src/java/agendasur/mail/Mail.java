@@ -53,7 +53,7 @@ public class Mail {
     }
     
    
-    private static void enviarMail(String msj, String email){
+    private static void enviarMail(String email, String msj){
         final String username ="ingenieriawebsoap@gmail.com";
         final String password ="rafaluque";
         Properties properties = new Properties();

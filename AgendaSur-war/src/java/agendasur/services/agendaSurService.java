@@ -91,8 +91,12 @@ public class agendaSurService {
     }
 
     @WebMethod(operationName = "asignarTagsAEvento")
-    public void asignarTagsAEvento(Evento evento, List<Tag> listTags) {
+    public void asignarTagsAEvento(Evento evento, List<String> listTagsString) {
+        
+        List<Tag> listTags = new ArrayList<>();
+        listTagsString.forEach(tagId -> listTags.add(this.findTag(tagId)));
         evento.setTagList(listTags);
+        
         for (Tag tag : listTags) {
             if (tag.getEventoList() == null) {
                 tag.setEventoList(new LinkedList<>());
@@ -136,14 +140,12 @@ public class agendaSurService {
         return listaEventos;
     }
 
-    
-
     @WebMethod(operationName = "existeMeGusta")
     public boolean existeMeGusta(Evento evento, Usuario usuario) {
         return ejbEvento.existeMegusta(evento, usuario);
         //return evento.getUsuarioList().contains(usuario) && usuario.getEventoList().contains(evento);
     }
-
+   
     //COMENTARIO
     @WebMethod(operationName = "createComentario")
     @Oneway

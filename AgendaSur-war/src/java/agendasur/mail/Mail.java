@@ -5,6 +5,9 @@
  */
 package agendasur.mail;
 
+import agendasur.entity.Evento;
+import agendasur.entity.Tag;
+import agendasur.entity.Usuario;
 import java.util.Properties;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -32,9 +35,25 @@ public class Mail {
     public Mail() {
     }
 
+    public static void sendMail(Evento e){
+        if(e.getValidado()){
+            for(Tag t : e.getTagList()){
+                for(Usuario u: t.getUsuarioList()){
+                    if(u.getEmail().equals(e.getCreador().getEmail())){
+                        enviarMail(u.getEmail(), "Su evento '" + e.getNombre() + "' ha sido publicado.");
+                    }else{
+                        enviarMail(u.getEmail(), "Se ha creado un evento que contiene el TAG '" + t.getNombre() + "', y puede que te interese.");
+                    }
+                }
+            }
+            
+        }else{
+            enviarMail(e.getCreador().getEmail(), "Su evento '" + e.getNombre() + "' ha sido rechazado.");
+        }
+    }
+    
    
-   
-    public static void sendMail(String msj, String email){
+    private static void enviarMail(String msj, String email){
         final String username ="ingenieriawebsoap@gmail.com";
         final String password ="rafaluque";
         Properties properties = new Properties();

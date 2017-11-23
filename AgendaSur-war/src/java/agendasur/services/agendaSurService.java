@@ -89,20 +89,56 @@ public class agendaSurService {
     public int countEvento() {
         return ejbEvento.count();
     }
+    
+    @WebMethod(operationName = "asignarTagsAUsuario")
+    public void asignarTagsAUsuario(String email, List<String> listTagsString) {
+        //Borrar el antiguo usuario de tag
+        Usuario u = findUsuario(email);
+        for(Tag t : u.getTagList()){
+            if(!listTagsString.contains(t.getNombre())){
+                t.getUsuarioList().remove(u);
+                ejbTag.edit(t);
+            }
+        }
+        List<Tag> listTags = new ArrayList<>();
+        listTagsString.forEach(tagId -> listTags.add(this.findTag(tagId)));
+        u.setTagList(listTags);
 
+        for (Tag tag : listTags) {
+            if (tag.getUsuarioList() == null) {
+                tag.setUsuarioList(new LinkedList<>());
+            }
+            if (!tag.getUsuarioList().contains(u)) {
+                tag.getUsuarioList().add(u);
+                ejbTag.edit(tag);
+            }
+        }
+        ejbUsuario.edit(u);
+    }
+    
     @WebMethod(operationName = "asignarTagsAEvento")
     public void asignarTagsAEvento(Evento evento, List<String> listTagsString) {
+        //Borrar el antiguo tags
+        evento = findEvento(evento.getId());
+        for(Tag t : evento.getTagList()){
+            if(!listTagsString.contains(t.getNombre())){
+                t.getEventoList().remove(evento);
+                ejbTag.edit(t);
+            }
+        }
         
         List<Tag> listTags = new ArrayList<>();
         listTagsString.forEach(tagId -> listTags.add(this.findTag(tagId)));
         evento.setTagList(listTags);
-        
+
         for (Tag tag : listTags) {
             if (tag.getEventoList() == null) {
                 tag.setEventoList(new LinkedList<>());
             }
-            tag.getEventoList().add(evento);
-            ejbTag.edit(tag);
+            if (!tag.getEventoList().contains(evento)) {
+                tag.getEventoList().add(evento);
+                ejbTag.edit(tag);
+            }
         }
         ejbEvento.edit(evento);
     }
@@ -134,9 +170,9 @@ public class agendaSurService {
     @WebMethod(operationName = "findEventosOrdenadosPorDistancia")
     public List<Evento> findEventosOrdenadosPorDistancia(double longitud, double latitud) {
         List<Evento> listaEventos = this.findEventosNoCaducadosYValidados();
-        listaEventos.sort((evento1, evento2) -> 
-                Double.compare(Distancia.getDistancia(evento2.getLatitud(), evento2.getLongitud(),latitud, longitud), 
-                            Distancia.getDistancia(evento1.getLatitud(), evento1.getLongitud(),latitud, longitud)));
+        listaEventos.sort((evento1, evento2)
+                -> Double.compare(Distancia.getDistancia(evento2.getLatitud(), evento2.getLongitud(), latitud, longitud),
+                        Distancia.getDistancia(evento1.getLatitud(), evento1.getLongitud(), latitud, longitud)));
         return listaEventos;
     }
 
@@ -145,7 +181,7 @@ public class agendaSurService {
         return ejbEvento.existeMegusta(evento, usuario);
         //return evento.getUsuarioList().contains(usuario) && usuario.getEventoList().contains(evento);
     }
-   
+
     //COMENTARIO
     @WebMethod(operationName = "createComentario")
     @Oneway
@@ -267,5 +303,20 @@ public class agendaSurService {
     public void sendMail(int id) {
         Evento e = findEvento(id);
         Mail.sendMail(e);
+    }
+
+    /**
+     * Web service operation
+     * @param email
+     * @return 
+     */
+    @WebMethod(operationName = "findTagsUsuario")
+    public List<Tag> findTagsUsuario(String email) {
+        return ejbTag.findTagsByUser(findUsuario(email));
+    }
+    
+    @WebMethod(operationName = "findTagsEvento")
+    public List<Tag> findTagsEvento(int id) {
+        return ejbTag.findTagsByEvento(findEvento(id));
     }
 }

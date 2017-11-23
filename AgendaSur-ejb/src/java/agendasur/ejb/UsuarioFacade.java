@@ -5,10 +5,13 @@
  */
 package agendasur.ejb;
 
+import agendasur.entity.Tag;
 import agendasur.entity.Usuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +31,11 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     public UsuarioFacade() {
         super(Usuario.class);
     }
-    
+
+    public List<Usuario> findUsuariosByTags(List<Tag> tagList) {
+        Query q;
+        q = this.em.createQuery("select u from Usuario u where :taglist member of u.tagList ");
+        q.setParameter("taglist", tagList.get(0));
+        return q.getResultList();
+    }
 }

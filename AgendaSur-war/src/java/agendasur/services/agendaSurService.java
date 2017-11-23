@@ -181,6 +181,14 @@ public class agendaSurService {
         return ejbEvento.existeMegusta(evento, usuario);
         //return evento.getUsuarioList().contains(usuario) && usuario.getEventoList().contains(evento);
     }
+    
+    @WebMethod(operationName = "validarEvento")
+    public void validarEvento(int id){
+        Evento e = this.findEvento(id);
+        e.setValidado(true);
+        ejbEvento.edit(e);
+        this.sendMail(id);
+    }
 
     //COMENTARIO
     @WebMethod(operationName = "createComentario")

@@ -74,13 +74,13 @@ public class agendaSurService {
     public List<Comentario> findComentariosEvento(int id) {
         return ejbComentario.getComentarios(id);
     }
-
+    /*
     @WebMethod(operationName = "findAllEvento")
     public List<Evento> findAllEvento() {
         return ejbEvento.findAll();
     }
 
-    /*@WebMethod(operationName = "findRangeEvento")
+    @WebMethod(operationName = "findRangeEvento")
     public List<Evento> findRangeEvento(@WebParam(name = "range") int[] range) {
         return ejbEvento.findRange(range);
     }*/
@@ -237,12 +237,13 @@ public class agendaSurService {
         ejbUsuario.create(entity);
     }*/
 
+    /*
     @WebMethod(operationName = "editUsuario")
     @Oneway
     public void editUsuario(@WebParam(name = "entity") Usuario entity) {
         ejbUsuario.edit(entity);
     }
-
+    */
     /*@WebMethod(operationName = "removeUsuario")
     @Oneway
     public void removeUsuario(@WebParam(name = "entity") Usuario entity) {
@@ -276,12 +277,13 @@ public class agendaSurService {
         ejbTag.create(entity);
     }*/
 
+    /*
     @WebMethod(operationName = "editTag")
     @Oneway
     public void editTag(@WebParam(name = "entity") Tag entity) {
         ejbTag.edit(entity);
     }
-
+    */
     /*@WebMethod(operationName = "removeTag")
     @Oneway
     public void removeTag(@WebParam(name = "entity") Tag entity) {

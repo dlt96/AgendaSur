@@ -42,21 +42,18 @@ public class agendaSurService {
     @EJB
     private UsuarioFacade ejbUsuario;
 
-    // SE USA
     @WebMethod(operationName = "createEvento")
     @Oneway
     public void createEvento(@WebParam(name = "entity") Evento entity) {
         ejbEvento.create(entity);
     }
-
-    // SE USA
+    
     @WebMethod(operationName = "editEvento")
     @Oneway
     public void editEvento(@WebParam(name = "entity") Evento entity) {
         ejbEvento.edit(entity);
     }
 
-    // SE USA
     @WebMethod(operationName = "removeEvento")
     @Oneway
     public void removeEvento(@WebParam(name = "entity") Evento entity) {
@@ -73,29 +70,26 @@ public class agendaSurService {
         return ejbEvento.findEventosByTag(tag);
     }
 
-    // SE USA
     @WebMethod(operationName = "findComentariosEvento")
     public List<Comentario> findComentariosEvento(int id) {
         return ejbComentario.getComentarios(id);
     }
 
-    // SE USA
     @WebMethod(operationName = "findAllEvento")
     public List<Evento> findAllEvento() {
         return ejbEvento.findAll();
     }
 
-    @WebMethod(operationName = "findRangeEvento")
+    /*@WebMethod(operationName = "findRangeEvento")
     public List<Evento> findRangeEvento(@WebParam(name = "range") int[] range) {
         return ejbEvento.findRange(range);
-    }
+    }*/
 
-    @WebMethod(operationName = "countEvento")
+    /*@WebMethod(operationName = "countEvento")
     public int countEvento() {
         return ejbEvento.count();
-    }
-    
-    // SE USA
+    }*/
+
     @WebMethod(operationName = "asignarTagsAUsuario")
     public void asignarTagsAUsuario(String email, List<String> listTagsString) {
         //Borrar el antiguo usuario de tag
@@ -122,7 +116,6 @@ public class agendaSurService {
         ejbUsuario.edit(u);
     }
     
-    // SE USA
     @WebMethod(operationName = "asignarTagsAEvento")
     public void asignarTagsAEvento(Evento evento, List<String> listTagsString) {
         //Borrar el antiguo tags
@@ -150,19 +143,16 @@ public class agendaSurService {
         ejbEvento.edit(evento);
     }
 
-    // SE USA
     @WebMethod(operationName = "findEventosNoCaducadosYValidados")
     public List<Evento> findEventosNoCaducadosYValidados() {
         return ejbEvento.findEventosNoCaducadosYValidados();
     }
 
-    // SE USA
     @WebMethod(operationName = "findEventosNoValidados")
     public List<Evento> findEventosNoValidados() {
         return ejbEvento.findEventosNoValidados();
     }
 
-    // SE USA
     @WebMethod(operationName = "darMeGusta")
     public void darMeGusta(Evento evento, Usuario usuario) {
         List<Usuario> meGustasEvento = evento.getUsuarioList();
@@ -177,7 +167,6 @@ public class agendaSurService {
         ejbUsuario.edit(usuario);
     }
 
-    // SE USA
     @WebMethod(operationName = "findEventosOrdenadosPorDistancia")
     public List<Evento> findEventosOrdenadosPorDistancia(double longitud, double latitud) {
         List<Evento> listaEventos = this.findEventosNoCaducadosYValidados();
@@ -187,14 +176,12 @@ public class agendaSurService {
         return listaEventos;
     }
 
-    // SE USA
     @WebMethod(operationName = "existeMeGusta")
     public boolean existeMeGusta(Evento evento, Usuario usuario) {
         return ejbEvento.existeMegusta(evento, usuario);
         //return evento.getUsuarioList().contains(usuario) && usuario.getEventoList().contains(evento);
     }
     
-    // SE USA
     @WebMethod(operationName = "validarEvento")
     public void validarEvento(int id){
         Evento e = this.findEvento(id);
@@ -204,15 +191,14 @@ public class agendaSurService {
     }
 
     //COMENTARIO
-    
-    // SE USA
+  
     @WebMethod(operationName = "createComentario")
     @Oneway
     public void createComentario(@WebParam(name = "entity") Comentario entity) {
         ejbComentario.create(entity);
     }
 
-    @WebMethod(operationName = "editComentario")
+    /*@WebMethod(operationName = "editComentario")
     @Oneway
     public void editComentario(@WebParam(name = "entity") Comentario entity) {
         ejbComentario.edit(entity);
@@ -249,7 +235,7 @@ public class agendaSurService {
     @Oneway
     public void createUsuario(@WebParam(name = "entity") Usuario entity) {
         ejbUsuario.create(entity);
-    }
+    }*/
 
     @WebMethod(operationName = "editUsuario")
     @Oneway
@@ -257,19 +243,18 @@ public class agendaSurService {
         ejbUsuario.edit(entity);
     }
 
-    @WebMethod(operationName = "removeUsuario")
+    /*@WebMethod(operationName = "removeUsuario")
     @Oneway
     public void removeUsuario(@WebParam(name = "entity") Usuario entity) {
         ejbUsuario.remove(entity);
-    }
+    }*/
 
-    // SE USA
     @WebMethod(operationName = "findUsuario")
     public Usuario findUsuario(@WebParam(name = "id") Object id) {
         return ejbUsuario.find(id);
     }
 
-    @WebMethod(operationName = "findAllUsuario")
+    /*@WebMethod(operationName = "findAllUsuario")
     public List<Usuario> findAllUsuario() {
         return ejbUsuario.findAll();
     }
@@ -282,14 +267,14 @@ public class agendaSurService {
     @WebMethod(operationName = "countUsuario")
     public int countUsuario() {
         return ejbUsuario.count();
-    }
+    }*/
 
 //TAG
-    @WebMethod(operationName = "createTag")
+    /*@WebMethod(operationName = "createTag")
     @Oneway
     public void createTag(@WebParam(name = "entity") Tag entity) {
         ejbTag.create(entity);
-    }
+    }*/
 
     @WebMethod(operationName = "editTag")
     @Oneway
@@ -297,25 +282,23 @@ public class agendaSurService {
         ejbTag.edit(entity);
     }
 
-    @WebMethod(operationName = "removeTag")
+    /*@WebMethod(operationName = "removeTag")
     @Oneway
     public void removeTag(@WebParam(name = "entity") Tag entity) {
         ejbTag.remove(entity);
-    }
+    }*/
 
-    // SE USA
     @WebMethod(operationName = "findTag")
     public Tag findTag(@WebParam(name = "id") Object id) {
         return ejbTag.find(id);
     }
 
-    // SE USA
     @WebMethod(operationName = "findAllTag")
     public List<Tag> findAllTag() {
         return ejbTag.findAll();
     }
 
-    @WebMethod(operationName = "findRangeTag")
+    /*@WebMethod(operationName = "findRangeTag")
     public List<Tag> findRangeTag(@WebParam(name = "range") int[] range) {
         return ejbTag.findRange(range);
     }
@@ -323,9 +306,8 @@ public class agendaSurService {
     @WebMethod(operationName = "countTag")
     public int countTag() {
         return ejbTag.count();
-    }
+    }*/
 
-    // SE USA
     @WebMethod(operationName = "sendMail")
     public void sendMail(int id) {
         Evento e = findEvento(id);
@@ -338,13 +320,11 @@ public class agendaSurService {
      * @return 
      */
     
-    // SE USA
     @WebMethod(operationName = "findTagsUsuario")
     public List<Tag> findTagsUsuario(String email) {
         return ejbTag.findTagsByUser(findUsuario(email));
     }
     
-    // SE USA
     @WebMethod(operationName = "findTagsEvento")
     public List<Tag> findTagsEvento(int id) {
         return ejbTag.findTagsByEvento(findEvento(id));

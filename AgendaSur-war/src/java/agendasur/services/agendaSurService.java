@@ -171,8 +171,8 @@ public class agendaSurService {
     public List<Evento> findEventosOrdenadosPorDistancia(double longitud, double latitud) {
         List<Evento> listaEventos = this.findEventosNoCaducadosYValidados();
         listaEventos.sort((evento1, evento2)
-                -> Double.compare(Distancia.getDistancia(evento2.getLatitud(), evento2.getLongitud(), latitud, longitud),
-                        Distancia.getDistancia(evento1.getLatitud(), evento1.getLongitud(), latitud, longitud)));
+                -> Double.compare(Distancia.getDistancia(evento1.getLatitud(), evento1.getLongitud(), latitud, longitud),
+                        Distancia.getDistancia(evento2.getLatitud(), evento2.getLongitud(), latitud, longitud)));
         return listaEventos;
     }
 
